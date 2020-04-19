@@ -1,13 +1,21 @@
-- name: Install mod_wsgi files into Apache
-  copy: src={{ item.src }} dest={{ item.dest }}
-  owner: root
-  group: root
-  mode: 644
-  with_items:
-    - { src: '/files/mod_wsgi_python38.so', dest: '/usr/lib/apache2/modules/' }
-    - { src: '/files/wsgi_python38.load', dest: '/etc/apache2/mods-available/' }
+---
+- name: Install mod_wsgi module into Apache
+  copy:
+    src: mod_wsgi_python38.so
+    dest: /usr/lib/apache2/modules/mod_wsgi_python38.so
+    owner: root
+    group: root
+    mode: "0644"
 
-- name: Load WSGI module via symlink
+- name: Install mod_wsgi loader into Apache
+  copy:
+    src: wsgi_python38.load
+    dest: /etc/apache2/mods-available/wsgi_python38.load
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Enable mod_wsgi loader via symlink
   file:
     src: /etc/apache2/mods-available/wsgi_python38.load
     dest: /etc/apache2/mods-enabled/wsgi_python38.load
