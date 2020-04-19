@@ -1,0 +1,9 @@
+[web_py]
+py1.digitalocean.com
+
+[web_php]
+php1.digitalocean.com
+
+[ubuntu_18:children]
+web_py
+web_php
