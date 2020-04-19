@@ -42,7 +42,7 @@ Clone this repository.
 
 Edit the `inventory` file and add the destination servers.
 
-    [web_py]
+    [web-py]
     dev.yourserver.com
     123.34.56.789
 
@@ -52,22 +52,22 @@ Edit the `ansible.cfg` file and change the `remote_user` to the one you created 
 
 Deploy the server:
 
-    ansible-playbook playbooks/web_py.yml
+    ansible-playbook playbooks/web-py.yml
 
 NOTE: if you're using Vagrant, you may get an error about the config file being world-writable due to Vagrant's shared folders. You can issue commands with an environment variable as a work-around:
 
-    ANSIBLE_CONFIG=./ansible.cfg ansible-playbook playbooks/web_py.yml
+    ANSIBLE_CONFIG=./ansible.cfg ansible-playbook playbooks/web-py.yml
 
 Show some servers:
 
-    ansible ubuntu_18 --list-hosts
-    ansible web_py --list-hosts
+    ansible ubuntu-18 --list-hosts
+    ansible web-py --list-hosts
 
 Run some commands; `shell` is required for arguments and shell functions (`command` runs without the target user's shell):
 
     ansible all -m command -a uptime -i inventory
     ansible all -m shell -oa 'ps -eaf'
-    ansible ubuntu_18 -m copy -a 'content="Welcome to your server, Ansiblized.\n" dest=/etc/motd' -u apache --become --become-user root
+    ansible ubuntu-18 -m copy -a 'content="Welcome to your server, Ansiblized.\n" dest=/etc/motd' -u apache --become --become-user root
 
 Documentation: list help section, show documentation for specific command (with examples!):
 
