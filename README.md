@@ -10,19 +10,23 @@ The destination server will need to be kickstarted with Ubuntu 18.04. Log in as 
 
 ```bash
 adduser your_project_ansible_user
-passwd your_project_ansible_user
 usermod -aG sudo your_project_ansible_user
 chmod 640 /etc/sudoers
 ```
 
-Then edit `/etc/sudoers`. Comment out the line that says `# %sudo        ALL=(ALL)       ALL` and uncomment the line that says `%sudo  ALL=(ALL)       NOPASSWD: ALL`. Then let's become the `your_project_ansible_user` user, and generate keys:
+Then edit `/etc/sudoers`. Find this line:
+`%sudo   ALL=(ALL:ALL) ALL`
+...and change it to:
+`%sudo   ALL=(ALL:ALL) NOPASSWD: ALL`
+
+Then let's become the `your_project_ansible_user` user, and generate keys:
 
 ```bash
 su - your_project_ansible_user
 ssh-keygen -t ed25519
 ```
 
-You will then need to add your public key from your host control machine to `your_project_ansible_user`'s authorized keys in `~/.ssh/authorized_keys`:
+After issuing the `ssh-keygen` command, hit enter three times to use the defaults. You will then need to add your public key from your host control machine to `your_project_ansible_user`'s authorized keys in `~/.ssh/authorized_keys`:
 
 ```bash
 echo "ssh-ed25519 AAAAC3NzDummyDI1Z72sk0VuRo48DummydF2dtADummyTHxNTE5AoDummyMyckiqF2 you@yourdomain.com" >> .ssh/authorized_keys
