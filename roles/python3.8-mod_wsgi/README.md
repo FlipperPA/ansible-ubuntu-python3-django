@@ -1,10 +1,10 @@
 # Install mod_wsgi for Apache
 
-This roles installs mod_wsgi for Apache, which allows serving Django and Flask WSGI applications.
+This role installs `mod_wsgi` for Apache, which will serve Django and Flask WSGI applications.
 
 ## Building a New `.so` File
 
-To build a `.so` file for a new version of Python, install the new Python, and then use pip to build the so:
+To build an `.so` file for a new version of Python, install the new Python, and then use pip to build the so:
 
 ```bash
 python3.x -m venv mod_wsgi_venv
