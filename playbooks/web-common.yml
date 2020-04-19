@@ -1,0 +1,6 @@
+---
+- name: Configuring Generic Web Host
+  hosts: "{{ host_group | default("web-py") }}"
+  become: yes
+  roles:
+    - { role: "apache", tags: ["apache", "web"] }

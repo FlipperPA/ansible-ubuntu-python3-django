@@ -1,0 +1,31 @@
+---
+- import_playbook: web_common.yml host_group=web-py
+- name: Additional tasks to be performed on Python / Django servers
+  hosts: web-py
+  become: yes
+  vars:
+    # DEFAULTS for the template, if not overridden in `sites`
+    "USER": "web_deploy"
+    "GROUP": "apache"
+    "DJANGO_ROOT": "/var/django/sites"
+    "STATIC": true
+
+    # Websites / domains for these servers to host
+    "websites": [
+        {
+            "name": "yourserver",
+            "server_name": "yourserver.org",
+            "server_aliases": [
+                "www.yourserver.org"
+            ],
+            "sites": [
+                {
+                    "path": "/",
+                    "project": "yourserver",
+                }
+            ]
+        },
+    ]
+  roles:
+    - { role: "python3.8", tags: ["python"] }
+    - { role: "python3.8-mod_wsgi", tags: ["python"] }
