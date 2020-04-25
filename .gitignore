@@ -23,3 +23,10 @@ tramp
 # Windows
 Thumbs.db
 Desktop.ini
+
+# Virtual environments
+venv/
+
+# Ignore Ansible example files
+ansible.cfg
+inventory
