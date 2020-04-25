@@ -6,7 +6,7 @@
   vars:
     # DEFAULTS for the template, if not overridden in `sites`
     "USER": "web_deploy"
-    "GROUP": "apache"
+    "GROUP": "www-data"
     "DJANGO_ROOT": "/var/django/sites"
     "STATIC": true
 
