@@ -1,9 +1,9 @@
 ---
 - name: Add the service user as defined in the playbook
   user:
-    name: {{ USER }}
+    name: "{{ USER }}"
     shell: /bin/bash
-    group: {{ GROUP }}
+    group: "{{ GROUP }}"
     generate_ssh_key: yes
     ssh_key_bits: 4096
     ssh_key_file: .ssh/id_rsa
@@ -12,8 +12,8 @@
   file:
     name: "/var/django/{{ item }}"
     state: directory
-    owner: {{ USER }}
-    group: {{ GROUP }}
+    owner: "{{ USER }}"
+    group: "{{ GROUP }}"
     mode: 0775
   with_items:
     - sites
