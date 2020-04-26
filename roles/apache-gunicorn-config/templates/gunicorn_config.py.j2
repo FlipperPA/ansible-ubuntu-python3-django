@@ -1,0 +1,10 @@
+import multiprocessing
+
+workers = multiprocessing.cpu_count() * 2 + 1
+bind = 'unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn-{{ site.project }}.sock'
+umask = 0o007
+reload = True
+
+# Pass logging through to STDOUT/STDERR for Apache
+accesslog = '-'
+errorlog = '-'

@@ -1,0 +1,32 @@
+<VirtualHost *:80>
+  ServerName {{ item.server_name }}
+{% if item.server_aliases|default('None') != 'None' %}
+  ServerAlias{% for alias in item.server_aliases %} {{ alias }}{% endfor %}
+
+{% endif %}
+  ErrorLog "/var/django/logs/{{ item.name }}-error.log"
+  LogLevel info
+
+  WSGIApplicationGroup %{GLOBAL}
+{% for site in item.sites %}
+
+	<Location {{ site.path }}>
+		ProxyPass unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn-{{ site.project }}.sock|http://127.0.0.1/
+		ProxyPassReverse unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn-{{ site.project }}.sock|http://127.0.0.1/
+	</Location>
+
+{% if site.static|default(STATIC) %}
+  Alias {% if site.path != "/" %}{{ site.path }}{% endif %}/static/ {{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/static/
+  <Directory {{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/static>
+    Header always set Access-Control-Allow-Origin "*"
+    Require all granted
+  </Directory>
+{% endif %}
+{% if site.media_path|default('None') != 'None' %}
+  Alias {% if site.path != "/" %}{{ site.path }}{% endif %}/media/ {{ site.media_path }}/
+  <Directory {{ site.media_path }}>
+    Require all granted
+  </Directory>
+{% endif %}
+{% endfor %}
+</VirtualHost>
