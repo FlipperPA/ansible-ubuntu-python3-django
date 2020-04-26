@@ -27,6 +27,7 @@
         },
     ]
   roles:
-    - { role: "python3.8", tags: ["python"] }
+    - { role: "postgresql-12", tags: ["python"] }
+    - { role: "python-3.8", tags: ["python"] }
     - { role: "apache", tags: ["apache"] }
     - { role: "apache-django-deploy", tags: ["apache"] }
