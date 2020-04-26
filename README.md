@@ -1,6 +1,6 @@
 # Ubuntu 18.04, Python 3 & Django Ansible Playbooks and Roles
 
-This repository holds Ansible playbooks and roles for configuring Python 3 & Django servers. You should be able to clone the repository and follow these steps to get a server up and running; this has been tested with Digital Ocean droplets.
+This repository holds Ansible playbooks and roles for configuring Python 3 & Django servers. You should be able to clone the repository and follow these steps to get a server up and running; this has been tested with Digital Ocean droplets. These instructions assume you have a working knowledge of how SSH keypairs work; [click here for a good introductory tutorial](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys).
 
 You'll want to come up with a service account name that you'll use in place of `your_project_ansible_user`. After cloning this repository, edit `ansible.cfg` and change `remote_user = your_project_ansible_user` with the username you will use.
 
@@ -23,7 +23,7 @@ Then let's become the `your_project_ansible_user` user, and generate keys:
 
 ```bash
 su - your_project_ansible_user
-ssh-keygen -t ed25519
+ssh-keygen -b 4096
 ```
 
 After issuing the `ssh-keygen` command, hit enter three times to use the defaults. You will then need to add your public key from your host control machine to `your_project_ansible_user`'s authorized keys in `~/.ssh/authorized_keys`:
@@ -31,6 +31,19 @@ After issuing the `ssh-keygen` command, hit enter three times to use the default
 ```bash
 echo "ssh-ed25519 AAAAC3NzDummyDI1Z72sk0VuRo48DummydF2dtADummyTHxNTE5AoDummyMyckiqF2 you@yourdomain.com" >> .ssh/authorized_keys
 chmod 600 .ssh/authorized_keys
+exit
+```
+
+We'll want to create a separate service user account with less privileges to deploy your Django project. I'll call this account `web_deploy`, but you can choose whatever name you like.
+
+```bash
+adduser web_deploy
+usermod -aG www-data web_deploy
+su - web_deploy
+ssh-keygen -b 4096
+echo "ssh-ed25519 AAAAC3NzDummyDI1Z72sk0VuRo48DummydF2dtADummyTHxNTE5AoDummyMyckiqF2 you@yourdomain.com" >> .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+exit
 ```
 
 ## Getting started
