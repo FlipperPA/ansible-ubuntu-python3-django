@@ -28,4 +28,5 @@
     ]
   roles:
     - { role: "python3.8", tags: ["python"] }
-    - { role: "python3.8-mod_wsgi", tags: ["python"] }
+    - { role: "apache", tags: ["apache"] }
+    - { role: "apache-django-deploy", tags: ["apache"] }
