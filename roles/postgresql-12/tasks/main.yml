@@ -1,0 +1,19 @@
+- name: Import the PostgreSQL GPG key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+  become: yes
+
+- name: Install the PostgreSQL apt repository
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
+    state: present
+  become: yes
+
+- name: Install PostgreSQL server, client, and development headers
+  apt:
+    pkg:
+    - postgresql-12
+    - postgresql-client-12
+    - postgresql-server-dev-12
+  become: yes
