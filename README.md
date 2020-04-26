@@ -41,10 +41,14 @@ adduser web_deploy
 usermod -aG www-data web_deploy
 su - web_deploy
 ssh-keygen -b 4096
+ssh-keygen -t ed25519
 echo "ssh-ed25519 AAAAC3NzDummyDI1Z72sk0VuRo48DummydF2dtADummyTHxNTE5AoDummyMyckiqF2 you@yourdomain.com" >> .ssh/authorized_keys
 chmod 600 .ssh/authorized_keys
-exit
+cat .ssh/id_ed25519.pub
 ```
+
+Then copy your `id_ed25519.pub` key as a deployment key. Under GitHub, this is found under your repository, `Settings`, `Deploy Keys`. After adding the key, make sure you can clone your repository to your home directory. This will also allow you to add your version control host's RSA key fingerprint, required the first time you connect.
+
 
 ## Getting started
 
