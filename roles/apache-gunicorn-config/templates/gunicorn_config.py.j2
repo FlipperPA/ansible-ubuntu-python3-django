@@ -1,7 +1,7 @@
 from multiprocessing import cpu_count
 
 workers = cpu_count() * 2 + 1
-bind = 'unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn-{{ item.1.project }}.sock'
+bind = 'unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.1.project|replace("-", "_") }}.sock'
 umask = 0o007
 reload = True
 

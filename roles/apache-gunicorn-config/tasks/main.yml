@@ -17,7 +17,7 @@
 - name: Create Green Unicorn configs for each site
   template:
     src: "gunicorn_config.py.j2"
-    dest: "{{ item.0.django_root|default(DJANGO_ROOT) }}/gunicorn_config_{{ item.1.project }}.py"
+    dest: "{{ item.0.django_root|default(DJANGO_ROOT) }}/gunicorn_config_{{ item.1.project|replace("-", "_") }}.py"
   loop: "{{ websites|subelements('sites') }}"
 
 - name: Create Ubuntu service files
