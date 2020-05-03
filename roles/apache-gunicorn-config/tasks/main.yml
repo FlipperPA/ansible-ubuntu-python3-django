@@ -5,7 +5,7 @@
     dest: "/etc/apache2/sites-available/{{ item.name }}.conf"
   with_items: "{{ websites }}"
 
-- name: Activate websites via symlink
+- name: Activate websites with symlinks.
   file:
     src: "/etc/apache2/sites-available/{{ item.name }}.conf"
     dest: "/etc/apache2/sites-enabled/{{ item.name }}.conf"
@@ -13,6 +13,17 @@
     group: root
     state: link
   with_items: "{{ websites }}"
+
+- name: Create Green Unicorn configs for each site
+  template:
+    src: "gunicorn_config.py.j2"
+    dest: "{{ item.0.django_root|default(DJANGO_ROOT) }}/gunicorn_config_{{ item.1.project }}.py"
+  loop: "{{ websites|subelements('sites') }}"
+
+- name: Create Ubuntu service files
+  debug:
+    msg: "||| {{ item.0 }} *** {{ item.1 }} |||"
+  loop: "{{ websites|subelements('sites') }}"
 
 - name: (re)start httpd service
   service:
