@@ -12,6 +12,7 @@
     owner: root
     group: root
     state: link
+  with_items: "{{ websites }}"
 
 - name: (re)start httpd service
   service:

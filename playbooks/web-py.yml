@@ -52,3 +52,4 @@
     - { role: "python-3.8", tags: ["python"] }
     - { role: "apache", tags: ["apache"] }
     - { role: "apache-django-deploy", tags: ["apache"] }
+    - { role: "apache-gunicorn-config", tags: ["apache"] }

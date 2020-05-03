@@ -13,7 +13,7 @@
     group: root
     state: link
 
-- name: Load SSL module via symlink
+- name: Load ssl module via symlink
   file:
     src: /etc/apache2/mods-available/ssl.load
     dest: /etc/apache2/mods-enabled/ssl.load
@@ -21,10 +21,34 @@
     group: root
     state: link
 
-- name: Configure SSL module via symlink
+- name: Configure ssl module via symlink
   file:
     src: /etc/apache2/mods-available/ssl.conf
     dest: /etc/apache2/mods-enabled/ssl.conf
+    owner: root
+    group: root
+    state: link
+
+- name: Load headers module via symlink
+  file:
+    src: /etc/apache2/mods-available/headers.load
+    dest: /etc/apache2/mods-enabled/headers.load
+    owner: root
+    group: root
+    state: link
+
+- name: Load proxy module via symlink
+  file:
+    src: /etc/apache2/mods-available/proxy.load
+    dest: /etc/apache2/mods-enabled/proxy.load
+    owner: root
+    group: root
+    state: link
+
+- name: Configure proxy module via symlink
+  file:
+    src: /etc/apache2/mods-available/proxy.conf
+    dest: /etc/apache2/mods-enabled/proxy.conf
     owner: root
     group: root
     state: link
