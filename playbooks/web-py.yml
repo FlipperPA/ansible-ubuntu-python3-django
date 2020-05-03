@@ -20,8 +20,29 @@
             ],
             "sites": [
                 {
+                    "path": "/a-test",
+                    "project": "test-path",
+                },
+                {
                     "path": "/",
                     "project": "yourserver",
+                }
+            ]
+        },
+        {
+            "name": "yourserver2",
+            "server_name": "yourserver2.org",
+            "server_aliases": [
+                "www.yourserver2.org"
+            ],
+            "sites": [
+                {
+                    "path": "/a-test",
+                    "project": "test-path",
+                },
+                {
+                    "path": "/",
+                    "project": "yourserver2",
                 }
             ]
         },

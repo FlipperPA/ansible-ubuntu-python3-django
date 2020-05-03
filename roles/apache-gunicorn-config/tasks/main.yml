@@ -1,0 +1,19 @@
+---
+- name: Create Apache website conf files.
+  template:
+    src: "apache.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ item.name }}.conf"
+  with_items: "{{ websites }}"
+
+- name: Activate websites via symlink
+  file:
+    src: "/etc/apache2/sites-available/{{ item.name }}.conf"
+    dest: "/etc/apache2/sites-enabled/{{ item.name }}.conf"
+    owner: root
+    group: root
+    state: link
+
+- name: (re)start httpd service
+  service:
+    name: apache2
+    state: restarted
