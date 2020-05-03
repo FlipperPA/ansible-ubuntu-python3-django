@@ -50,6 +50,7 @@
   roles:
     - { role: "postgresql-12", tags: ["python"] }
     - { role: "python-3.8", tags: ["python"] }
+    - { role: "python-3.8-pdf-prereqs", tags: ["python"] }
     - { role: "apache", tags: ["apache"] }
     - { role: "apache-django-deploy", tags: ["apache"] }
     - { role: "apache-gunicorn-config", tags: ["apache"] }
