@@ -4,7 +4,7 @@
     state: present
   become: yes
 
-- name: Install a list of packages
+- name: Install Python 3.8 with development headers and venv support.
   apt:
     pkg:
     - python3.8
