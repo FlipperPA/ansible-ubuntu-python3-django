@@ -20,6 +20,12 @@
     dest: "{{ item.0.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.0.name }}_{{ item.1.project|replace('-', '_') }}.py"
   loop: "{{ websites|subelements('sites') }}"
 
+- name: Create systemd service files for each site
+  template:
+    src: "gunicorn_systemd_service.j2"
+    dest: "/etc/systemd/system/gunicorn_{{ item.0.name }}_{{ item.1.project|replace('-', '_') }}.service"
+  loop: "{{ websites|subelements('sites') }}"
+
 - name: Create Ubuntu service files
   debug:
     msg: "||| {{ item.0 }} *** {{ item.1 }} |||"
