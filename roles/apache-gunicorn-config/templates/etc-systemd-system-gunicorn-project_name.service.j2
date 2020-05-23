@@ -5,9 +5,9 @@ After=network.target
 [Service]
 User=root
 Group=www-data
-WorkingDirectory={{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/
-Environment="PATH={{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/venv/bin"
-ExecStart={{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/venv/bin/gunicorn --config gunicorn_config.py wsgi:app
+WorkingDirectory="{{ item.0.django_root|default(DJANGO_ROOT) }}/{{ item.0.name }}_{{ item.1.project }}/"
+Environment="{{ item.0.django_root|default(DJANGO_ROOT) }}/{{ item.0.name }}_{{ item.1.project }}/venv/bin"
+ExecStart="{{ item.0.django_root|default(DJANGO_ROOT) }}/{{ item.0.name }}_{{ item.1.project }}/venv/bin/gunicorn --config gunicorn_config.py wsgi:app"
 
 [Install]
 WantedBy=multi-user.target

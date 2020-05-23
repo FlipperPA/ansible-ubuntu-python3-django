@@ -5,7 +5,7 @@
 
 {% endif %}
   ErrorLog "/var/django/logs/{{ item.name }}-error.log"
-  LogLevel warning
+  LogLevel {{ item.log_level|default(LOG_LEVEL) }}
 {% for site in item.sites %}
 
   <Location {{ site.path }}>

@@ -9,6 +9,8 @@
     "GROUP": "www-data"
     "DJANGO_ROOT": "/var/django/sites"
     "STATIC": true
+    # Logging level for Apache httpd; must be one of: emerg/alert/crit/error/warn/notice/info/debug/trace1/.../trace8
+    "LOG_LEVEL": "error"
 
     # Websites / domains for these servers to host
     "websites": [
@@ -18,6 +20,7 @@
             "server_aliases": [
                 "www.yourserver.org"
             ],
+            "log_level": "warn",
             "sites": [
                 {
                     "path": "/a-test",
