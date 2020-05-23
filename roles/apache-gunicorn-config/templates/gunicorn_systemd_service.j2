@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve flask application
+After=network.target
+
+[Service]
+User={{ site.user|default(USER) }}
+Group={{ site.user|default(GROUP) }}
+WorkingDirectory={{ site.django_root|default(DJANGO_ROOT) }}/flask_rest/
+Environment="PATH={{ site.django_root|default(DJANGO_ROOT) }}/flask_rest/flaskvenv/bin"
+ExecStart={{ site.django_root|default(DJANGO_ROOT) }}/flask_rest/flaskvenv/bin/gunicorn --config gunicorn_config.py wsgi:app
+
+[Install]
+WantedBy=multi-user.target
