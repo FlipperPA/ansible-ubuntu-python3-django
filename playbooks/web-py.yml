@@ -52,5 +52,5 @@
     - { role: "python-3.8", tags: ["python"] }
     - { role: "python-3.8-pdf-prereqs", tags: ["python"] }
     - { role: "apache", tags: ["apache"] }
-    - { role: "apache-django-deploy", tags: ["apache"] }
-    - { role: "apache-gunicorn-config", tags: ["apache"] }
+    - { role: "apache-django-deploy", tags: ["apache", "django"] }
+    - { role: "apache-gunicorn-config", tags: ["apache", "gunicorn", "django"] }
