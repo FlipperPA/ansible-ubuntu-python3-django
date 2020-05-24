@@ -1,13 +1,13 @@
 [Unit]
-Description="Gunicorn instance to serve: {{ item.0.name }}_{{ item.1.project }}"
+Description="Gunicorn instance to serve: {{ item.1.project }}"
 After=network.target
 
 [Service]
-User={{ item.0.user|default(USER) }}
-Group={{ item.0.user|default(GROUP) }}
-WorkingDirectory={{ item.0.django_root|default(DJANGO_ROOT) }}/{{ item.1.project }}/
-Environment="PATH={{ item.0.django_root|default(DJANGO_ROOT) }}/{{ item.1.project }}/venv/bin"
-ExecStart={{ item.0.django_root|default(DJANGO_ROOT) }}/{{ item.1.project }}/venv/bin/gunicorn --config {{ item.0.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.1.project|replace('-', '_') }}.py config.wsgi:app
+User={{ item.1.user|default(USER) }}
+Group={{ item.1.user|default(GROUP) }}
+WorkingDirectory={{ item.1.django_root|default(DJANGO_ROOT) }}/{{ item.1.project }}/
+Environment="PATH={{ item.1.django_root|default(DJANGO_ROOT) }}/{{ item.1.project }}/venv/bin"
+ExecStart={{ item.1.django_root|default(DJANGO_ROOT) }}/{{ item.1.project }}/venv/bin/gunicorn --config {{ item.0.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.1.project|replace('-', '_') }}.py config.wsgi:app
 
 [Install]
 WantedBy=multi-user.target

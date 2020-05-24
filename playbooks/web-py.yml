@@ -15,7 +15,6 @@
     # Websites / domains for these servers to host
     "websites": [
         {
-            "name": "hockey",
             "server_name": "hockey.io",
             "server_aliases": [
                 "www.hockey.io",
@@ -33,7 +32,6 @@
             ]
         },
         {
-            "name": "football",
             "server_name": "football.io",
             "server_aliases": [
                 "www.football.io",

@@ -4,7 +4,7 @@
   ServerAlias{% for alias in item.server_aliases %} {{ alias }}{% endfor %}
 
 {% endif %}
-  ErrorLog "/var/django/logs/{{ item.name }}-error.log"
+  ErrorLog "/var/django/logs/{{ item.server_name }}.log"
   LogLevel {{ item.log_level|default(LOG_LEVEL) }}
 {% for site in item.sites %}
 
@@ -12,7 +12,6 @@
     ProxyPass unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
     ProxyPassReverse unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
   </Location>
-
 {% if site.static|default(STATIC) %}
   Alias {% if site.path != "/" %}{{ site.path }}{% endif %}/static/ {{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/static/
   <Directory {{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/static>

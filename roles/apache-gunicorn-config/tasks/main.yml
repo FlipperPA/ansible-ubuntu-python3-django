@@ -2,13 +2,13 @@
 - name: Create Apache website conf files.
   template:
     src: "apache.conf.j2"
-    dest: "/etc/apache2/sites-available/{{ item.name }}.conf"
+    dest: "/etc/apache2/sites-available/{{ item.server_name }}.conf"
   with_items: "{{ websites }}"
 
 - name: Activate websites with symlinks.
   file:
-    src: "/etc/apache2/sites-available/{{ item.name }}.conf"
-    dest: "/etc/apache2/sites-enabled/{{ item.name }}.conf"
+    src: "/etc/apache2/sites-available/{{ item.server_name }}.conf"
+    dest: "/etc/apache2/sites-enabled/{{ item.server_name }}.conf"
     owner: root
     group: root
     state: link
@@ -17,18 +17,13 @@
 - name: Create Green Unicorn configs for each site
   template:
     src: "gunicorn_config.py.j2"
-    dest: "{{ item.0.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.0.name }}_{{ item.1.project|replace('-', '_') }}.py"
+    dest: "{{ item.1.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.1.project|replace('-', '_') }}.py"
   loop: "{{ websites|subelements('sites') }}"
 
 - name: Create systemd service files for each site
   template:
     src: "gunicorn_systemd_service.j2"
-    dest: "/etc/systemd/system/gunicorn_{{ item.0.name }}_{{ item.1.project|replace('-', '_') }}.service"
-  loop: "{{ websites|subelements('sites') }}"
-
-- name: Create Ubuntu service files
-  debug:
-    msg: "||| {{ item.0 }} *** {{ item.1 }} |||"
+    dest: "/etc/systemd/system/gunicorn_{{ item.1.project|replace('-', '_') }}.service"
   loop: "{{ websites|subelements('sites') }}"
 
 - name: (re)start httpd service
