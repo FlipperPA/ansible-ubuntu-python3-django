@@ -1,5 +1,4 @@
 ---
-- import_playbook: web-common.yml host_group=web_py
 - name: Additional tasks to be performed on Python / Django servers
   hosts: web_py
   become: yes
