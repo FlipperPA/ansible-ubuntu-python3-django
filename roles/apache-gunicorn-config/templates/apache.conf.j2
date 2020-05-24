@@ -2,16 +2,15 @@
   ServerName {{ item.server_name }}
 {% if item.server_aliases|default('None') != 'None' %}
   ServerAlias{% for alias in item.server_aliases %} {{ alias }}{% endfor %}
-
 {% endif %}
   ErrorLog "/var/django/logs/{{ item.server_name }}.log"
   LogLevel {{ item.log_level|default(LOG_LEVEL) }}
 {% for site in item.sites %}
-
-  <Location {{ site.path }}>
-    ProxyPass unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
-    ProxyPassReverse unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
-  </Location>
+{% if site.static|default(STATIC) %}
+  ProxyPass {% if site.path != "/" %}{{ site.path }}{% endif %}/static/ !
+{% endif %}
+  ProxyPass {{ site.path }} unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
+  ProxyPassReverse {{ site.path }} unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
 {% if site.static|default(STATIC) %}
   Alias {% if site.path != "/" %}{{ site.path }}{% endif %}/static/ {{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/static/
   <Directory {{ site.django_root|default(DJANGO_ROOT) }}/{{ site.project }}/static>
