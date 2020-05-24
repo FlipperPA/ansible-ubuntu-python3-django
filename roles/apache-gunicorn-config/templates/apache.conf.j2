@@ -6,8 +6,12 @@
   ErrorLog "/var/django/logs/{{ item.server_name }}.log"
   LogLevel {{ item.log_level|default(LOG_LEVEL) }}
 {% for site in item.sites %}
+
 {% if site.static|default(STATIC) %}
   ProxyPass {% if site.path != "/" %}{{ site.path }}{% endif %}/static/ !
+{% endif %}
+{% if site.media_path|default('None') != 'None' %}
+  ProxyPass {% if site.path != "/" %}{{ site.path }}{% endif %}/media/ !
 {% endif %}
   ProxyPass {{ site.path }} unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
   ProxyPassReverse {{ site.path }} unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
