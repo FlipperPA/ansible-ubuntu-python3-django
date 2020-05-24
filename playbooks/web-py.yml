@@ -15,37 +15,39 @@
     # Websites / domains for these servers to host
     "websites": [
         {
-            "name": "yourserver",
-            "server_name": "yourserver.org",
+            "name": "hockey",
+            "server_name": "hockey.io",
             "server_aliases": [
-                "www.yourserver.org"
+                "www.hockey.io",
             ],
             "log_level": "warn",
             "sites": [
                 {
-                    "path": "/a-test",
-                    "project": "test-path",
+                    "path": "/philadelphia-flyers",
+                    "project": "hockey-philadelphia-flyers",
                 },
                 {
                     "path": "/",
-                    "project": "yourserver",
+                    "project": "hockey-main",
                 }
             ]
         },
         {
-            "name": "yourserver2",
-            "server_name": "yourserver2.org",
+            "name": "football",
+            "server_name": "football.io",
             "server_aliases": [
-                "www.yourserver2.org"
+                "www.football.io",
+                "soccer.io",
+                "www.soccer.io",
             ],
             "sites": [
                 {
-                    "path": "/a-test",
-                    "project": "test-path",
+                    "path": "/world-cup",
+                    "project": "football-world-cup",
                 },
                 {
                     "path": "/",
-                    "project": "yourserver2",
+                    "project": "football-main",
                 }
             ]
         },

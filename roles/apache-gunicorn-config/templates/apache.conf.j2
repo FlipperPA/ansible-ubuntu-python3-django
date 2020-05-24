@@ -9,8 +9,8 @@
 {% for site in item.sites %}
 
   <Location {{ site.path }}>
-    ProxyPass unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.name }}_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
-    ProxyPassReverse unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.name }}_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
+    ProxyPass unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
+    ProxyPassReverse unix:{{ site.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ site.project|replace("-", "_") }}.sock|http://127.0.0.1/
   </Location>
 
 {% if site.static|default(STATIC) %}
