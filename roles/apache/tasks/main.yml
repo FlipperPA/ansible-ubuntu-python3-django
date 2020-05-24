@@ -5,50 +5,27 @@
     - apache2-dev
   become: yes
 
-- name: Load socache module via symlink
+- name: Load modules via symlink
   file:
-    src: /etc/apache2/mods-available/socache_shmcb.load
-    dest: /etc/apache2/mods-enabled/socache_shmcb.load
+    src: /etc/apache2/mods-available/{{ item }}.load
+    dest: /etc/apache2/mods-enabled/{{ item }}.load
     owner: root
     group: root
     state: link
+  with_items:
+    - socache_shmcb
+    - ssl
+    - headers
+    - proxy
+    - proxy_http
 
-- name: Load ssl module via symlink
+- name: Configure modules via symlink
   file:
-    src: /etc/apache2/mods-available/ssl.load
-    dest: /etc/apache2/mods-enabled/ssl.load
+    src: /etc/apache2/mods-available/{{ item }}.conf
+    dest: /etc/apache2/mods-enabled/{{ item }}.conf
     owner: root
     group: root
     state: link
-
-- name: Configure ssl module via symlink
-  file:
-    src: /etc/apache2/mods-available/ssl.conf
-    dest: /etc/apache2/mods-enabled/ssl.conf
-    owner: root
-    group: root
-    state: link
-
-- name: Load headers module via symlink
-  file:
-    src: /etc/apache2/mods-available/headers.load
-    dest: /etc/apache2/mods-enabled/headers.load
-    owner: root
-    group: root
-    state: link
-
-- name: Load proxy module via symlink
-  file:
-    src: /etc/apache2/mods-available/proxy.load
-    dest: /etc/apache2/mods-enabled/proxy.load
-    owner: root
-    group: root
-    state: link
-
-- name: Configure proxy module via symlink
-  file:
-    src: /etc/apache2/mods-available/proxy.conf
-    dest: /etc/apache2/mods-enabled/proxy.conf
-    owner: root
-    group: root
-    state: link
+  with_items:
+    - ssl
+    - proxy
