@@ -26,6 +26,13 @@
     dest: "/etc/systemd/system/gunicorn_{{ item.1.project|replace('-', '_') }}.service"
   loop: "{{ websites|subelements('sites') }}"
 
+- name: Start site services and enable at boot
+  systemd:
+    name: "gunicorn_{{ item.1.project|replace('-', '_') }}.service"
+    state: started
+    enabled: yes
+  loop: "{{ websites|subelements('sites') }}"
+  
 - name: (re)start httpd service
   service:
     name: apache2
