@@ -50,9 +50,11 @@
         },
     ]
   roles:
+    - { role: "ubuntu-firewall", tags: ["firewall"] }
     - { role: "postgresql-12", tags: ["python"] }
     - { role: "python-3.8", tags: ["python"] }
     - { role: "python-3.8-pdf-prereqs", tags: ["python"] }
     - { role: "apache", tags: ["apache"] }
     - { role: "apache-django-deploy", tags: ["apache", "django"] }
     - { role: "apache-gunicorn-config", tags: ["apache", "gunicorn", "django"] }
+    - { role: "apache-lets-encrypt", tags: ["apache", "tls"] }
