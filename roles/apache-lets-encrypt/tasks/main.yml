@@ -1,0 +1,11 @@
+- name: Install the Let's Encrypt for Apache repository
+  apt_repository:
+    repo: ppa:certbot/certbot
+    state: present
+  become: yes
+
+- name: Install Let's Encrypt for Apache.
+  apt:
+    pkg:
+    - python-certbot-apache
+  become: yes
