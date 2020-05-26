@@ -1,13 +1,13 @@
 # Ubuntu 18.04, Python 3 & Django Ansible Playbooks and Roles
 
-This repository holds Ansible playbooks and roles for configuring Python 3 & Django servers. You should be able to clone the repository and follow these steps to get a server up and running; this has been tested with Digital Ocean droplets.
+This repository holds Ansible playbooks and roles for configuring Python 3 & Django servers. You should be able to clone the repository and follow these steps to get a server up and running; this has been tested with Digital Ocean droplets, and can be adapted to other infrastructures as well.
 
 These instructions assume the following:
 
 * You have a working knowledge of [how SSH keypairs work](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys).
 * You have a Django project to deploy. You can deploy it with a Django app such as [Django SSH Deployer](https://github.com/FlipperPA/django-ssh-deployer).
 
-## Preparing a Destination Server
+## Preparing the Destination Server
 
 The destination server will need to be kickstarted with Ubuntu 18.04. Log in as root to your freshly created Digital Ocean droplet (you used SSH keys, right?), and create a user on the destination server. I'll call this service account user `ansible_deploy`, but feel free to name it something different. If you name it something different, you'll want to change it in `ansible.cfg` as well.
 
