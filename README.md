@@ -40,7 +40,7 @@ exit
 We'll want to create a separate service user account with less privileges to deploy your Django project. I'll call this account `web_deploy`, but you can choose whatever name you like. The `echo` command will add your public key from your host control machine, just like it did for `ansible_deploy`.
 
 ```bash
-adduser web_deploy
+adduser --disabled-password --gecos "" web_deploy
 usermod -aG www-data web_deploy
 su - web_deploy
 ssh-keygen -b 4096
