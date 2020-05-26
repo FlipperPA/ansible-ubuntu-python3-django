@@ -1,10 +1,10 @@
-- name: Start by denying everything
+- name: Start by denying all ports
   ufw:
     state: enabled
     policy: deny
 
-# Allow OpenSSH.
-- ufw:
+- name: Allow SSH on port 22
+  ufw:
     rule: allow
     name: OpenSSH
 
@@ -14,7 +14,7 @@
     port: '80'
     proto: tcp
 
-- name: Allow all access to tcp port 80, https
+- name: Allow all access to tcp port 443, https
   ufw:
     rule: allow
     port: '443'
