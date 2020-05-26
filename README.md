@@ -12,7 +12,7 @@ These instructions assume the following:
 The destination server will need to be kickstarted with Ubuntu 18.04. Log in as root to your freshly created Digital Ocean droplet (you used SSH keys, right?), and create a user on the destination server. I'll call this service account user `ansible_deploy`, but feel free to name it something different. If you name it something different, you'll want to change it in `ansible.cfg` as well.
 
 ```bash
-adduser ansible_deploy
+adduser --disabled-password --gecos "" ansible_deploy
 usermod -aG sudo ansible_deploy
 chmod 640 /etc/sudoers
 ```
@@ -32,8 +32,8 @@ ssh-keygen -b 4096
 After issuing the `ssh-keygen` command, hit enter three times to use the defaults. You will then need to add your public key from your host control machine to `ansible_deploy`'s authorized keys in `~/.ssh/authorized_keys`:
 
 ```bash
-echo "ssh-ed25519 AAAADummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDu you@yourdomain.com" >> .ssh/authorized_keys
-chmod 600 .ssh/authorized_keys
+echo "ssh-ed25519 AAAADummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDu you@yourdomain.com" >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
 exit
 ```
 
@@ -51,7 +51,6 @@ cat .ssh/id_ed25519.pub
 ```
 
 Then copy your `id_ed25519.pub` key as a deployment key. Under GitHub, this is found under your repository, `Settings`, `Deploy Keys`. After adding the key, make sure you can clone your repository to your home directory. This will also allow you to add your version control host's RSA key fingerprint, required the first time you connect.
-
 
 ## Getting started
 
