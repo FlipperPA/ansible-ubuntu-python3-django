@@ -1,4 +1,4 @@
-# Ubuntu 18.04, Python 3 & Django Ansible Playbooks and Roles
+# Ubuntu 20.04, Python 3 & Django Ansible Playbooks and Roles
 
 This repository holds Ansible playbooks and roles for configuring Python 3 & Django servers. You should be able to clone the repository and follow these steps to get a server up and running; this has been tested with Digital Ocean droplets, and can be adapted to other infrastructures as well.
 
