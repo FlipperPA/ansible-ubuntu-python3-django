@@ -1,0 +1,16 @@
+- name: Install the Dead Snakes Python repository
+  apt_repository:
+    repo: ppa:deadsnakes/ppa
+    state: present
+  become: yes
+
+- name: Install Python 3.9 with development headers and venv support.
+  apt:
+    pkg:
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python3.9
+    - python3.9-dev
+    - python3.9-venv
+  become: yes
