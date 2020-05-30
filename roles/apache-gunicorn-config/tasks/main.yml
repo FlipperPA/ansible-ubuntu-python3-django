@@ -18,6 +18,8 @@
   template:
     src: "gunicorn_config.py.j2"
     dest: "{{ item.1.django_root|default(DJANGO_ROOT) }}/gunicorn_{{ item.1.project|replace('-', '_') }}.py"
+    owner: "{{ USER }}"
+    group: "{{ GROUP }}"
   loop: "{{ websites|subelements('sites') }}"
 
 - name: Create systemd service files for each site
