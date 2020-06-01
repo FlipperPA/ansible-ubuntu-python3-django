@@ -9,7 +9,12 @@ These instructions assume the following:
 
 ## Preparing the Destination Server
 
-The destination server will need to be kickstarted with Ubuntu 18.04. Log in as root to your freshly created Digital Ocean droplet (you used SSH keys, right?), and create a user on the destination server. I'll call this service account user `ansible_deploy`, but feel free to name it something different. If you name it something different, you'll want to change it in `ansible.cfg` as well.
+The destination server will need to be kickstarted with Ubuntu 20.04; be sure [you've uploaded your public key to Digital Ocean, and included it during droplet creation](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/). Be sure to copy the commands below line-by-line; some command require interaction, and if you're learning, it will help you figure out what each command does.
+
+### Creating a Service User for Ansible
+
+* First, log in as root to your freshly created Digital Ocean droplet
+* Then, create a service account to run Ansible. I'll call this service account user `ansible_deploy`, but feel free to name it something different. If you name it something different, you'll want to change it in `ansible.cfg` as well. Here are the command to create the user:
 
 ```bash
 adduser --disabled-password --gecos "" ansible_deploy
@@ -37,6 +42,8 @@ chmod 600 ~/.ssh/authorized_keys
 exit
 ```
 
+### Create a Service User for Deploying Your Web Code
+
 We'll want to create a separate service user account with less privileges to deploy your Django project. I'll call this account `web_deploy`, but you can choose whatever name you like. The `echo` command will add your public key from your host control machine, just like it did for `ansible_deploy`.
 
 ```bash
@@ -51,6 +58,36 @@ cat .ssh/id_ed25519.pub
 ```
 
 Then copy your `id_ed25519.pub` key as a deployment key. Under GitHub, this is found under your repository, `Settings`, `Deploy Keys`. After adding the key, make sure you can clone your repository to your home directory. This will also allow you to add your version control host's RSA key fingerprint, required the first time you connect.
+
+### Testing the Service Accounts
+
+Now, let's ensure we can connect as our service accounts from our control machine, and that our web deployment account can connect to our code repository. In this example, I'll test whether we can connect to GitHub.
+
+```bash
+# Connect to your Digital Ocean Droplet server as the Ansible service user
+ssh ansible_deploy@yourserver.com
+# Exit back to your control machine
+exit
+# Connect to your Digital Ocean Droplet server as the web service user
+ssh web_deploy@yourserver.com
+# Connect from your Digital Ocean Droplet server to GitHub to test your deployment key
+ssh git@github.com
+```
+
+You should see something like this; type `yes` to add the key permanently:
+
+```bash
+web_deploy@ubuntu-django-prod-1:~$ ssh git@github.com
+The authenticity of host 'github.com (140.82.114.4)' can't be established.
+RSA key fingerprint is SHA256:DummyDummyDummyDummyDummyDummyDummyDummyDum.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
+PTY allocation request failed on channel 0
+Hi YourUsername/YourSite! You've successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.
+```
+
+Your server is now ready to go! We can now built the server with Ansible and deploy our code.
 
 ## Getting started
 
