@@ -1,0 +1,20 @@
+- name: Set the hostname for Postfix
+  debconf:
+    name: postfix
+    question: postfix/mailname
+    value: your.hostname.com
+    vtype: string
+
+- name: Set the installation type for Postfix
+  debconf:
+    name: postfix
+    question: postfix/main_mailer_type
+    value: 'Internet Site'
+    vtype: string
+
+- name: Install Postfix
+  apt:
+    pkg:
+    - postfix
+    force: yes
+  become: yes
