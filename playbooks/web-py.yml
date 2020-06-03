@@ -51,6 +51,7 @@
     ]
   roles:
     - { role: "ubuntu-firewall", tags: ["firewall"] }
+    - { role: "postfix", tags: ["email"] }
     - { role: "postgresql-12", tags: ["python"] }
     - { role: "python-3.8", tags: ["python"] }
     - { role: "python-3.8-pdf-prereqs", tags: ["python"] }

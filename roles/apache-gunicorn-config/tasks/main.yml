@@ -31,7 +31,7 @@
 - name: Start site services and enable at boot
   systemd:
     name: "gunicorn_{{ item.1.project|replace('-', '_') }}.service"
-    state: started
+    state: restarted
     enabled: yes
   loop: "{{ websites|subelements('sites') }}"
   

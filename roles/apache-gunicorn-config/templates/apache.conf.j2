@@ -3,7 +3,8 @@
 {% if item.server_aliases|default('None') != 'None' %}
   ServerAlias{% for alias in item.server_aliases %} {{ alias }}{% endfor %}
 {% endif %}
-  ErrorLog "/var/django/logs/{{ item.server_name }}.log"
+
+  ErrorLog "/var/django/logs/apache_{{ item.server_name }}.log"
   LogLevel {{ item.log_level|default(LOG_LEVEL) }}
 {% for site in item.sites %}
 
