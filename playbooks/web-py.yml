@@ -2,6 +2,11 @@
 - name: Additional tasks to be performed on Python / Django servers
   hosts: web_py
   become: yes
+  vars_prompt:
+    - name: overwrite_apache
+      prompt: "Do you want to overwrite Apache configuration files? This can remove changes such as certs installed by Let's Encrypt. (yes/no)"
+      private: no
+      default: "no"
   vars:
     # DEFAULTS for the template, if not overridden in `sites`
     "USER": "web_deploy"

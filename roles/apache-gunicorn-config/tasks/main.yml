@@ -3,6 +3,7 @@
   template:
     src: "apache.conf.j2"
     dest: "/etc/apache2/sites-available/{{ item.server_name }}.conf"
+    force: "{{ overwrite_apache }}"
   with_items: "{{ websites }}"
 
 - name: Activate websites with symlinks.
