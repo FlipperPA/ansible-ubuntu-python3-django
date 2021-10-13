@@ -116,7 +116,7 @@ NOTE: if you're using Vagrant, you may get an error about the config file being 
 
 Show some servers:
 
-    ansible ubuntu_18 --list-hosts
+    ansible ubuntu_20 --list-hosts
     ansible web_py --list-hosts
 
 Run some commands; `shell` is required for arguments and shell functions (`command` runs without the target user's shell):
