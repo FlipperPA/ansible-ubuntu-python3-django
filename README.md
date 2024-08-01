@@ -1,6 +1,6 @@
-# Ubuntu, Python 3, Apache & Django Ansible Playbooks and Roles
+# Ubuntu, Python 3, Apache & Django: Ansible Playbooks and Roles
 
-This repository holds Ansible playbooks and roles for configuring Python 3 & Django servers. You should be able to clone the repository and follow these steps to get a server up and running; this has been tested with Digital Ocean droplets, and can be adapted to other infrastructures as well.
+We could call this something moronic like the U-PAD stack, but just in case you're ever required to use this particular concoction of technology, hopefully there are some helpful notes and examples here. This repository holds Ansible playbooks and roles for configuring Python 3 & Django servers; you should be able to clone the repository and follow these steps to get a server up and running; this has been tested with Digital Ocean droplets, and can be adapted to other infrastructures as well.
 
 These instructions assume the following:
 
@@ -34,7 +34,7 @@ su - ansible_deploy
 ssh-keygen -b 4096
 ```
 
-After issuing the `ssh-keygen` command, hit enter three times to use the defaults. You will then need to add your public key from your host control machine to `ansible_deploy`'s authorized keys in `~/.ssh/authorized_keys`:
+After issuing the `ssh-keygen` command, hit enter three times to use the defaults. You will then need to add your public key from your host control machine to `ansible_deploy`'s authorized keys in `~/.ssh/authorized_keys`. In the following examples, replace `ssh-ed25519 AAAADummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDu you@yourdomain.com` with your key from your local machine. This key is often found under your home directory in the `.ssh` sub-directory: `~/.ssh/id_ed25519.pub` or `~/.ssh/id_rsa.pub`.
 
 ```bash
 echo "ssh-ed25519 AAAADummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDummyDu you@yourdomain.com" >> ~/.ssh/authorized_keys
