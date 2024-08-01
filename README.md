@@ -9,7 +9,7 @@ These instructions assume the following:
 
 ## Preparing the Destination Server
 
-The destination server will need to be kickstarted with Ubuntu 20.04; be sure [you've uploaded your public key to Digital Ocean, and included it during droplet creation](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/). Be sure to copy the commands below line-by-line; some command require interaction, and if you're learning, it will help you figure out what each command does.
+The destination server will need to be kickstarted with Ubuntu; be sure [you've uploaded your public key to Digital Ocean or whatever ISP you're using, and included it during droplet creation](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/). Be sure to copy the commands below line-by-line; some command require interaction, and if you're learning, it will help you figure out what each command does.
 
 ### Creating a Service User for Ansible
 
@@ -93,8 +93,8 @@ Your server is now ready to go! We can now built the server with Ansible and dep
 
 Clone this repository.
 
-    git clone git@github.com:YourUsername/ansible-ubuntu18-python3-django.git
-    cd ansible-ubuntu18-python3-django.git
+    git clone git@github.com:YourUsername/ansible-ubuntu-python3-django.git
+    cd ansible-ubuntu-python3-django.git
 
 Edit the `inventory` file and add the destination servers.
 
@@ -110,22 +110,26 @@ Deploy the server:
 
     ansible-playbook playbooks/web-py.yml
 
-NOTE: if you're using Vagrant, you may get an error about the config file being world-writable due to Vagrant's shared folders. You can issue commands with an environment variable as a work-around:
-
-    ANSIBLE_CONFIG=./ansible.cfg ansible-playbook playbooks/web-py.yml
-
 Show some servers:
 
-    ansible ubuntu_20 --list-hosts
+    ansible ubuntu --list-hosts
     ansible web_py --list-hosts
 
 Run some commands; `shell` is required for arguments and shell functions (`command` runs without the target user's shell):
 
     ansible all -m command -a uptime -i inventory
     ansible all -m shell -oa 'ps -eaf'
-    ansible ubuntu_18 -m copy -a 'content="Welcome to your server, Ansiblized.\n" dest=/etc/motd' -u apache --become --become-user root
+    ansible ubuntu -m copy -a 'content="Welcome to your server, Ansiblized.\n" dest=/etc/motd' -u apache --become --become-user root
 
 Documentation: list help section, show documentation for specific command (with examples!):
 
     ansible-doc -l
     ansible-doc yum
+
+## Notes for Apache
+
+Most folks these days run gunicorn with nginx, but these examples are for Apache. We've had to do a few extra things for Apache to run as a Reverse Proxy with gunicorn for Django:
+
+* Ensure that you've set `USE_X_FORWARDED_HOST = True` and `SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')` in your project's Django settings, or it will return `http://127.0.0.1/` when URLs are built by `request.build_absolute_uri` instead of your domain.
+* We've set `RequestHeader set X_FORWARDED_PROTO 'https' env=HTTPS` and `RequestHeader set X-Forwarded-Ssl on` in Apache's configuration to properly pass through actual FQDN through the reverse proxy.
+* To run as a service user, we've installed and activated the `apache2-mpm-itk` module which allows use to set the `AssignUserId` directive in the Apache `VirtualHost` configuration.
