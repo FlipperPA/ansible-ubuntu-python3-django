@@ -132,4 +132,4 @@ Most folks these days run gunicorn with nginx, but these examples are for Apache
 
 * Ensure that you've set `USE_X_FORWARDED_HOST = True` and `SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')` in your project's Django settings, or it will return `http://127.0.0.1/` when URLs are built by `request.build_absolute_uri` instead of your domain.
 * We've set `RequestHeader set X_FORWARDED_PROTO 'https' env=HTTPS` and `RequestHeader set X-Forwarded-Ssl on` in Apache's configuration to properly pass through actual FQDN through the reverse proxy.
-* To run as a service user, we've installed and activated the `apache2-mpm-itk` module which allows use to set the `AssignUserId` directive in the Apache `VirtualHost` configuration.
+* To run as a service user, we've installed and activated the `libapache2-mpm-itk` module which allows use to set the `AssignUserId` directive in the Apache `VirtualHost` configuration.
