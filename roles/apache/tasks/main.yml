@@ -3,6 +3,7 @@
     pkg:
     - apache2
     - apache2-dev
+    - libapache2-mpm-itk
   become: yes
 
 - name: Load modules via symlink
